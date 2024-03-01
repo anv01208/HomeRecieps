@@ -1,0 +1,125 @@
+<%- include('partials/header'); -%>
+<style>
+ *,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+.main {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.cards_item {
+  display: flex;
+  padding: 1rem;
+}
+
+.card_image {
+  height: calc(13*1.2rem);
+  padding: 1.2rem 1.2rem 0;
+  position:relative;
+}
+.card_image:before,
+.card_image:after{
+  content: "";
+  position: absolute;
+  width: 20px;
+  left: 60%;
+  top: 0;
+  height: 45px;
+  background: #e6e6e6b8;
+  transform: rotate(45deg);
+}
+.card_image:after{
+  transform: rotate(-45deg);
+  top:auto;
+  bottom:-22px;
+  left:40%;
+}
+.card_image img {
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+.cards_item {
+  filter:drop-shadow(0 0 5px rgba(0, 0, 0, 0.25));
+}
+
+
+.card {
+  background-color: white;
+  border-radius: 0.25rem;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  padding-left: 30px;
+  background: repeating-linear-gradient(#0000 0 calc(1.2rem - 1px),#66afe1 0 1.2rem) right bottom /100% 100%,linear-gradient(red 0 0) 30px 0/2px 100% #fff;
+  background-repeat: no-repeat;
+  line-height: 1.2rem;
+}
+
+.card_content {
+  padding: 1.2rem;
+}
+
+h2.card_title,p {
+  margin: 1.2rem 0;
+}
+h2.card_title {
+    font-size: 1.3em;
+}
+body {
+  font-family:monospace;
+  background:#eee;
+}
+
+html {
+  font-size:15px;
+}
+</style>
+<h2 style="text-align: center;">Random Cocktails</h2>
+<div class="main">
+    <ul class="cards">
+        <% cocktails.forEach(cocktail => { %>
+        <li class="cards_item">
+            <div class="card">
+                <div class="card_image"><img src="<%= cocktail.strDrinkThumb %>" alt="<%= cocktail.strDrink %>" /></div>
+                <div class="card_content">
+                    <h2 class="card_title"><%= cocktail.strDrink %></h2>
+                    <h2><%=cocktail.strAlcoholic%></h2>
+                    <div class="card_text">
+                        <p><%= cocktail.strInstructions %></p>
+                    </div>
+                    <p style="text-align: center;">Indegridienst:</p>
+                    <ul>
+                      <ul>
+                        <% for (let i = 1; i <= 15; i++) { %>
+                          <% const ingredient = cocktail[`strIngredient${i}`]; %>
+                          <% const measure = cocktail[`strMeasure${i}`]; %>
+                          <% if (ingredient && measure) { %>
+                            <li><%= ingredient %> - <%= measure %></li>
+                          <% } %>
+                        <% } %>
+                      </ul>
+                      
+                    </ul>
+                    
+                </div>
+            </div>
+        </li>
+        <% }); %>
+    </ul>
+</div>
+
+<%- include('partials/footer'); -%>

@@ -1,0 +1,87 @@
+<%- include('partials/header'); -%>
+
+<form action="/signup">
+  <h2>Sign up</h2>
+  <label for="f_name">First name</label>
+  <input type="text" name="f_name" required />
+  <label for="s_name">Second name</label>
+  <input type="text" name="s_name" required />
+  <label for="email">Email</label>
+  <input type="text" name="email" required />
+  <div class="email error"></div>
+  <label for="password">Password</label>
+  <input type="password" name="password" required />
+  <div class="password error"></div>
+  <label for="age">Age</label>
+  <input type="number" name="age" required />
+  <label for="country">Country name</label>
+  <input type="text" name="country" required />
+  <label for="image">Link for image</label>
+  <input type="text" name="image" required />
+  <label for="secret">Secret code</label>
+  <input type="text" name="secret"  />
+  <label for="gender">Gender</label>
+  <select name="gender">
+    <option value="">Choose...</option>
+    <option value="male">Male</option>
+    <option value="female">Female</option>
+    <option value="other">Other</option>
+  </select>
+  <button>Sign up</button>
+</form>
+
+<%- include('partials/footer'); -%>
+
+<script>
+  const form = document.querySelector('form');
+const emailError = document.querySelector('.email.error');
+const passwordError = document.querySelector('.password.error');
+
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+
+  // сброс ошибок
+  emailError.textContent = '';
+  passwordError.textContent = '';
+
+  // получение значений
+  const email = form.email.value;
+  const password = form.password.value;
+  const f_name = form.f_name.value;
+  const s_name = form.s_name.value;
+  const country = form.country.value;
+  const age = form.age.value;
+  const image  = form.image.value;
+  const secret = form.secret.value
+  const gender  = form.gender.value
+  let role = '';
+
+  if (secret === "admin") {
+    role = "admin";
+  } else {
+    role = "regular";
+  }
+  console.log(secret);
+
+  try {
+    const res = await fetch('/signup', { 
+      method: 'POST',
+      body: JSON.stringify({ email, password, f_name, s_name, country, image, age, role ,gender}),
+      headers: {'Content-Type': 'application/json'}
+    });
+    const data = await res.json();
+    console.log(data);
+    if (data.errors) {
+      emailError.textContent = data.errors.email;
+      passwordError.textContent = data.errors.password;
+    }
+    if (data.user) {
+      location.assign('/');
+    }
+  }
+  catch (err) {
+    console.log(err);
+  }
+});
+
+</script>

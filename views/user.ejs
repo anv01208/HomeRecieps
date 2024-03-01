@@ -1,0 +1,73 @@
+<%- include('partials/header'); -%>
+
+
+
+<section class="articles" style="padding-left: 600px;">
+    <article>
+      <div class="article-wrapper">
+        <% if (oneuser.image) { %>
+            <figure>
+                <img style="width: 368px;height: 207px;" src="<%=oneuser.image%>"" alt="...">
+            </figure>
+          <% }else{ %>
+          
+          
+        <figure>
+            <img style="width: 368px;height: 207px;" src="https://t4.ftcdn.net/jpg/04/70/29/97/240_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg" alt="...">
+        </figure>
+        <%}%>
+        <div class="article-body" style="padding-left: 45px;">
+          <h2><%=oneuser.email%></h2>
+        </a>
+        <h3 style="text-align: justify;">
+        Name and Surname <%=oneuser.f_name%> <%=oneuser.s_name%> 
+        </h3>
+          <p>
+            Country:<%=oneuser.country%>
+          </p>
+          <p><%=oneuser.gender%></p>
+        
+        </div>
+      </div>
+    </article>  
+
+    <% if (user.role==="admin") { %>
+      <style>
+      .forms-container {
+        display: flex;
+        justify-content: space-between; /* Равномерное распределение элементов по контейнеру */
+        margin-left: 0px; /* Отступ слева для выравнивания форм */
+        margin-right: 0px; /* Отступ справа для выравнивания форм */
+      }
+      
+      .forms-container form {
+        flex: 1; /* Распределение пространства равномерно между формами */
+        margin-right: 20px; /* Отступ между формами */
+      }
+      
+
+      </style>
+      <div class="forms-container" >
+        <form action="/profile" method="post" class="update-form">
+          <h2>Update profile</h2>
+          <label for="f_name">Name</label>
+          <input type="text" name="f_name" value="<%=oneuser.f_name%>" />
+          <label for="f_name">Surname</label>
+          <input type="text" name="s_name" value="<%=oneuser.s_name%>" />
+          <label for="country">Country</label>
+          <input type="text" name="country" value="<%=oneuser.country%>" />
+          <label for="image">Image</label>
+          <input type="text" name="image" placeholder="Link for image" value="<%=oneuser.image%>" />
+          <input hidden name="id" value="<%=oneuser.id%>" />
+          <button type="submit">Update</button>
+        </form>
+      
+        <form action="/delete" method="post" class="delete-form" style="padding-right: 50px;" >
+          <h2>Delete User</h2>
+          <p>Are you sure you want to delete this user?</p>
+          <input hidden name="id" value="<%=oneuser.id%>" />
+          <button type="submit">Delete</button>
+        </form>
+      </div>
+      <%}%>
+<%- include('partials/footer'); -%>

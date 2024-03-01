@@ -1,0 +1,60 @@
+<%- include('partials/header'); -%>
+
+
+
+
+  <section class="articles" style="padding-left: 600px;">
+      <article>
+        <div class="article-wrapper">
+          <% if (user.image) { %>
+              <figure>
+                  <img style="width: 368px;height: 207px;" src="<%=user.image%>"" alt="...">
+              </figure>
+            <% }else{ %>
+            
+            
+          <figure>
+              <img style="width: 368px;height: 207px;" src="https://t4.ftcdn.net/jpg/04/70/29/97/240_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg" alt="...">
+          </figure>
+          <%}%>
+          <div class="article-body" style="padding-left: 45px;">
+            <h2>Email : <%=user.email%></h2>
+          </a>
+          <h3 style="text-align: justify;">
+          Name and Surname:<%=user.f_name%> <%=user.s_name%> 
+          </h3>
+            <p>
+              Country : <%=user.country%>
+            </p>
+            <p>Age : <%=user.age%></p>
+            <p>Gender:<%=user.gender%></p>
+          
+          </div>
+        </div>
+      </article>  
+
+    
+
+    
+  
+      
+  </section>
+
+  <form action="/profile" method="post">
+    <h2>Update profile</h2>
+    <label for="f_name">Name</label>
+    <input type="text" name="f_name" value="<%=user.f_name%>"  />
+    <label for="f_name">Surname</label>
+    <input type="text" name="s_name" value="<%=user.s_name%>"  />
+    <label for="country">Country</label>
+    <input type="text" name="country" value="<%=user.country%>"  />
+    <label for="image">Image</label>
+    <input type="text" name="image" placeholder="Link for image" value="<%=user.image%>"  />
+    <input hidden name="id" value="<%=user.id%>" />
+    
+    
+    <button type="submit">Update</button>
+  </form>
+
+
+<%- include('partials/footer'); -%>
